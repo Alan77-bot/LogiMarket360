@@ -1,0 +1,11 @@
+  LogiMarket.Domain -> C:\Users\yosti\Proyectos\LogiMarket360\src\LogiMarket.Domain\bin\Debug\net8.0\LogiMarket.Domain.dll
+  LogiMarket.Application -> C:\Users\yosti\Proyectos\LogiMarket360\src\LogiMarket.Application\bin\Debug\net8.0\LogiMarket.Application.dll
+  LogiMarket.Infrastructure -> C:\Users\yosti\Proyectos\LogiMarket360\src\LogiMarket.Infrastructure\bin\Debug\net8.0\LogiMarket.Infrastructure.dll
+  LogiMarket.WinForms -> C:\Users\yosti\Proyectos\LogiMarket360\src\LogiMarket.WinForms\bin\Debug\net8.0-windows\LogiMarket.WinForms.dll
+  LogiMarket.Tests -> C:\Users\yosti\Proyectos\LogiMarket360\tests\LogiMarket.Tests\bin\Debug\net8.0\LogiMarket.Tests.dll
+
+Compilación correcta.
+    0 Advertencia(s)
+    0 Errores
+
+Tiempo transcurrido 00:00:26.40

@@ -1,0 +1,9 @@
+﻿LOGIMARKET 360 - COMPROBANTE INTERNO
+Pedido: 1a5debe4-7428-485d-9b9f-acf5c2e6603f
+Cliente: Ana
+KIT_TELETRABAJO x1
+Subtotal: USD 60.00
+Descuento: USD 6.00
+Envio: USD 5.00
+Total: USD 59.00
+Documento de simulacion sin validez tributaria.

@@ -1,0 +1,23 @@
+Window: "LogiMarket 360", App: LogiMarket.WinForms.exe.
+	0 window (ventana) LogiMarket 360 Secondary Actions: Raise
+		713 window (diálogo) Secondary Actions: Raise
+			714 button (botón) Aceptar ID: 2
+			715 text (texto) Filas: 1000 Instancias: 1 ReferenceEquals: True Sin compartir: 104176 bytes asignados Compartido: 56360 bytes asignados No representa memoria total del proceso. ID: 65535
+			716 title bar (barra de título)
+				717 button (botón) Cerrar
+		1 pane (panel)
+			634 pane (panel) ID: 526498
+				635 tab (tabulación)
+					636 pane (panel) Auditoria
+						637 data grid (cuadrícula de datos)
+							638 custom Fila superior
+								639 header (encabezado) Usuario ID: 4259373825
+								640 header (encabezado) Operacion ID: 4264602382
+								641 header (encabezado) Resultado ID: 4244550533
+								642 header (encabezado) Correlacion ID: 4265410477
+								643 header (encabezado) Fecha ID: 4251823384
+							644 custom Fila 0
+								645 data item (elemento) Usuario Fila 0, Sin orden. Value: OUTBOX ID: 4236944613
+								646 data item (elemento) Operacion Fila 0, Sin orden. Value: DevolucionAceptada ID: 4264066064
+								647 data item (elemento) Resultado Fila 0, Sin orden. Value: PUBLICADO ID: 4239723666
+								648 data item (

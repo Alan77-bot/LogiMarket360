@@ -1,0 +1,10 @@
+11/21/2026 6:31:59 PM +00:00 System.InvalidOperationException: No se pudo actualizar VistaPedidos.
+ ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at System.Windows.Forms.DataGridViewBand.set_Thickness(Int32 value)
+   at System.Windows.Forms.DataGridViewBand.set_MinimumThickness(Int32 value)
+   at LogiMarket.WinForms.Shared.Ui.Cargar[T](DataGridView grid, IEnumerable`1 datos) in C:\Users\yosti\Proyectos\LogiMarket360\src\LogiMarket.WinForms\Shared\Ui.cs:line 57
+   at LogiMarket.WinForms.Features.VistaPedidos.Refrescar() in C:\Users\yosti\Proyectos\LogiMarket360\src\LogiMarket.WinForms\Features\VistaPedidos.cs:line 50
+   at LogiMarket.Application.Eventos.MediadorVistas.Actualizar() in C:\Users\yosti\Proyectos\LogiMarket360\src\LogiMarket.Application\Eventos\MediadorVistas.cs:line 11
+   --- End of inner exception stack trace ---
+   at LogiMarket.Application.Eventos.MediadorVistas.Actualizar() in C:\Users\yosti\Proyectos\LogiMarket360\src\LogiMarket.Application\Eventos\MediadorVistas.cs:line 12
+   at LogiMarket.WinForms.Shell.FormularioPrincipal.<>c__DisplayClass3_1.<<-ctor>b__1>d.MoveNext() in C:\Users\yosti\Proyectos\LogiMarket360\src\LogiMarket.WinForms\Shell\FormularioPrincipal.cs:line 34

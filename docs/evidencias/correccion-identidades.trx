@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="8e133a8b-9fe3-44b2-a052-c5c6079da591" name="yosti@PC_ALAN 2026-11-21 12:40:26" runUser="PC_ALAN\yosti" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-21T12:40:26.1875677-05:00" queuing="2026-11-21T12:40:26.1875757-05:00" start="2026-11-21T12:40:07.2636309-05:00" finish="2026-11-21T12:40:28.2774783-05:00" />
+  <TestSettings name="default" id="6f666c80-7118-4ef1-9507-66e09dbfd6c7">
+    <Deployment runDeploymentRoot="yosti_PC_ALAN_2026-11-21_12_40_26" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="9681d3fe-fb29-42db-ae9d-32bd37e1c0a9" testId="19700b3c-c597-85f1-5bd3-8dd5412e7862" testName="LogiMarket.Tests.Acceptance.FlujosTests.P02_P04_CasosOficiales(cliente: &quot;Carmen&quot;, entrega: ESTANDAR, sku: &quot;P03&quot;, cantidad: 10, otro: &quot;&quot;, otraCantidad: 0, total: 90, stockSku: &quot;P03&quot;, stock: 10)" computerName="PC_ALAN" duration="00:00:13.8956049" startTime="2026-11-21T12:40:25.9776307-05:00" endTime="2026-11-21T12:40:25.9777999-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9681d3fe-fb29-42db-ae9d-32bd37e1c0a9" />
+    <UnitTestResult executionId="ef85a8f5-05f7-4560-9959-22f7a6c60a26" testId="49b0a073-62e3-ae3b-e895-8d3ce4fbd967" testName="LogiMarket.Tests.Acceptance.FlujosTests.P02_P04_CasosOficiales(cliente: &quot;Luis&quot;, entrega: EXPRES, sku: &quot;P04&quot;, cantidad: 2, otro: &quot;P05&quot;, otraCantidad: 2, total: 102, stockSku: &quot;P04&quot;, stock: 2)" computerName="PC_ALAN" duration="00:00:00.9108704" startTime="2026-11-21T12:40:27.8162052-05:00" endTime="2026-11-21T12:40:27.8162065-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ef85a8f5-05f7-4560-9959-22f7a6c60a26" />
+    <UnitTestResult executionId="d9f91bbf-3c89-4f0f-87de-d0b5bbb4e170" testId="88f875d5-b147-d309-8d69-6ef178c19904" testName="LogiMarket.Tests.Acceptance.FlujosTests.P02_P04_CasosOficiales(cliente: &quot;Ana&quot;, entrega: ESTANDAR, sku: &quot;KIT_TELETRABAJO&quot;, cantidad: 1, otro: &quot;&quot;, otraCantidad: 0, total: 59, stockSku: &quot;P01&quot;, stock: 7)" computerName="PC_ALAN" duration="00:00:00.9331817" startTime="2026-11-21T12:40:26.9051123-05:00" endTime="2026-11-21T12:40:26.9051134-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d9f91bbf-3c89-4f0f-87de-d0b5bbb4e170" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="LogiMarket.Tests.Acceptance.FlujosTests.P02_P04_CasosOficiales(cliente: &quot;Luis&quot;, entrega: EXPRES, sku: &quot;P04&quot;, cantidad: 2, otro: &quot;P05&quot;, otraCantidad: 2, total: 102, stockSku: &quot;P04&quot;, stock: 2)" storage="c:\users\yosti\proyectos\logimarket360\tests\logimarket.tests\bin\debug\net8.0\logimarket.tests.dll" id="49b0a073-62e3-ae3b-e895-8d3ce4fbd967">
+      <Execution id="ef85a8f5-05f7-4560-9959-22f7a6c60a26" />
+      <TestMethod codeBase="C:\Users\yosti\Proyectos\LogiMarket360\tests\LogiMarket.Tests\bin\Debug\net8.0\LogiMarket.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogiMarket.Tests.Acceptance.FlujosTests" name="P02_P04_CasosOficiales" />
+    </UnitTest>
+    <UnitTest name="LogiMarket.Tests.Acceptance.FlujosTests.P02_P04_CasosOficiales(cliente: &quot;Carmen&quot;, entrega: ESTANDAR, sku: &quot;P03&quot;, cantidad: 10, otro: &quot;&quot;, otraCantidad: 0, total: 90, stockSku: &quot;P03&quot;, stock: 10)" storage="c:\users\yosti\proyectos\logimarket360\tests\logimarket.tests\bin\debug\net8.0\logimarket.tests.dll" id="19700b3c-c597-85f1-5bd3-8dd5412e7862">
+      <Execution id="9681d3fe-fb29-42db-ae9d-32bd37e1c0a9" />
+      <TestMethod codeBase="C:\Users\yosti\Proyectos\LogiMarket360\tests\LogiMarket.Tests\bin\Debug\net8.0\LogiMarket.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogiMarket.Tests.Acceptance.FlujosTests" name="P02_P04_CasosOficiales" />
+    </UnitTest>
+    <UnitTest name="LogiMarket.Tests.Acceptance.FlujosTests.P02_P04_CasosOficiales(cliente: &quot;Ana&quot;, entrega: ESTANDAR, sku: &quot;KIT_TELETRABAJO&quot;, cantidad: 1, otro: &quot;&quot;, otraCantidad: 0, total: 59, stockSku: &quot;P01&quot;, stock: 7)" storage="c:\users\yosti\proyectos\logimarket360\tests\logimarket.tests\bin\debug\net8.0\logimarket.tests.dll" id="88f875d5-b147-d309-8d69-6ef178c19904">
+      <Execution id="d9f91bbf-3c89-4f0f-87de-d0b5bbb4e170" />
+      <TestMethod codeBase="C:\Users\yosti\Proyectos\LogiMarket360\tests\LogiMarket.Tests\bin\Debug\net8.0\LogiMarket.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogiMarket.Tests.Acceptance.FlujosTests" name="P02_P04_CasosOficiales" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="19700b3c-c597-85f1-5bd3-8dd5412e7862" executionId="9681d3fe-fb29-42db-ae9d-32bd37e1c0a9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="49b0a073-62e3-ae3b-e895-8d3ce4fbd967" executionId="ef85a8f5-05f7-4560-9959-22f7a6c60a26" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="88f875d5-b147-d309-8d69-6ef178c19904" executionId="d9f91bbf-3c89-4f0f-87de-d0b5bbb4e170" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Resultados sin formato de lista" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Todos los resultados cargados" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="3" executed="3" passed="3" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.01] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.34)&#xD;
+[xUnit.net 00:00:00.72]   Discovering: LogiMarket.Tests&#xD;
+[xUnit.net 00:00:01.14]   Discovered:  LogiMarket.Tests&#xD;
+[xUnit.net 00:00:01.17]   Starting:    LogiMarket.Tests&#xD;
+[xUnit.net 00:00:17.26]   Finished:    LogiMarket.Tests&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>
