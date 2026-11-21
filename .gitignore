@@ -1,0 +1,16 @@
+**/bin/
+**/obj/
+.vs/
+.idea/
+*.user
+*.suo
+*.db
+*.db-shm
+*.db-wal
+*.sqlite*
+TestResults/
+.tools/
+artifacts/
+*.tmp
+*.log
+appsettings.local.json
