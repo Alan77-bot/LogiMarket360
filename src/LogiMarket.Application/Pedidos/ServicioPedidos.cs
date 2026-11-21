@@ -42,6 +42,8 @@ public sealed class ServicioPedidos(IRepositorio repo, ITransacciones tx, Autori
         await auth.Exigir(Rol.VENTAS);
         await tx.Ejecutar(async () => {
             var pedido = await repo.Pedido(id); pedido.ExigirEditable();
+            // Se usan precios historicos de las lineas, no el catalogo actual.
+            pedido.Valorar(calculadora, entregas.Single(e => e.Tipo == pedido.Entrega).CrearTarifa().Importe);
             var resultado = CadenaConfirmacion.Validar(new(pedido, (await repo.Clientes()).SingleOrDefault(c => c.Id == pedido.ClienteId), await repo.Productos()), false);
             if (!resultado.Valido) throw new InvalidOperationException(resultado.Mensaje);
             pedido.Transicionar(EstadoPedido.VALIDADO, sesion.Nombre, reloj.Ahora); return true;

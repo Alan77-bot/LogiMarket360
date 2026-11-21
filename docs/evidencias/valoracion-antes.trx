@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="6ea241bf-d92e-407a-9843-d7be0e818fd5" name="yosti@PC_ALAN 2026-11-21 14:31:03" runUser="PC_ALAN\yosti" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-21T14:31:03.0517781-05:00" queuing="2026-11-21T14:31:03.0517790-05:00" start="2026-11-21T14:30:55.7549300-05:00" finish="2026-11-21T14:31:03.1457075-05:00" />
+  <TestSettings name="default" id="ab198a27-6d58-434b-93c6-332511545d64">
+    <Deployment runDeploymentRoot="yosti_PC_ALAN_2026-11-21_14_31_03" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="ed2290b4-df91-4e58-9958-b3c5e366e46c" testId="3cc4a277-bf91-9390-80e7-fee12df7d1af" testName="LogiMarket.Tests.Acceptance.ValoracionTests.CantidadEditadaExigeRevalorarAntesDeValidar" computerName="PC_ALAN" duration="00:00:00.0049339" startTime="2026-11-21T14:31:03.0020265-05:00" endTime="2026-11-21T14:31:03.0020267-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ed2290b4-df91-4e58-9958-b3c5e366e46c">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Throws() Failure: No exception was thrown&#xD;
+Expected: typeof(System.InvalidOperationException)</Message>
+          <StackTrace>   at LogiMarket.Tests.Acceptance.ValoracionTests.CantidadEditadaExigeRevalorarAntesDeValidar() in C:\Users\yosti\Proyectos\LogiMarket360\tests\LogiMarket.Tests\Acceptance\ValoracionTests.cs:line 22&#xD;
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9c3f518b-155c-43f2-bcda-de69ad048ece" testId="231e11d1-4e73-b845-799e-36839694439b" testName="LogiMarket.Tests.Acceptance.ValoracionTests.ValidarRecalculaElBorradorDesdeSusInstantaneas" computerName="PC_ALAN" duration="00:00:04.2568026" startTime="2026-11-21T14:31:02.9759405-05:00" endTime="2026-11-21T14:31:02.9759928-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9c3f518b-155c-43f2-bcda-de69ad048ece">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Values differ&#xD;
+Expected: 113&#xD;
+Actual:   59.0</Message>
+          <StackTrace>   at LogiMarket.Tests.Acceptance.ValoracionTests.ValidarRecalculaElBorradorDesdeSusInstantaneas() in C:\Users\yosti\Proyectos\LogiMarket360\tests\LogiMarket.Tests\Acceptance\ValoracionTests.cs:line 40&#xD;
+   at LogiMarket.Tests.Acceptance.ValoracionTests.ValidarRecalculaElBorradorDesdeSusInstantaneas() in C:\Users\yosti\Proyectos\LogiMarket360\tests\LogiMarket.Tests\Acceptance\ValoracionTests.cs:line 40&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="LogiMarket.Tests.Acceptance.ValoracionTests.CantidadEditadaExigeRevalorarAntesDeValidar" storage="c:\users\yosti\proyectos\logimarket360\tests\logimarket.tests\bin\debug\net8.0\logimarket.tests.dll" id="3cc4a277-bf91-9390-80e7-fee12df7d1af">
+      <Execution id="ed2290b4-df91-4e58-9958-b3c5e366e46c" />
+      <TestMethod codeBase="C:\Users\yosti\Proyectos\LogiMarket360\tests\LogiMarket.Tests\bin\Debug\net8.0\LogiMarket.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogiMarket.Tests.Acceptance.ValoracionTests" name="CantidadEditadaExigeRevalorarAntesDeValidar" />
+    </UnitTest>
+    <UnitTest name="LogiMarket.Tests.Acceptance.ValoracionTests.ValidarRecalculaElBorradorDesdeSusInstantaneas" storage="c:\users\yosti\proyectos\logimarket360\tests\logimarket.tests\bin\debug\net8.0\logimarket.tests.dll" id="231e11d1-4e73-b845-799e-36839694439b">
+      <Execution id="9c3f518b-155c-43f2-bcda-de69ad048ece" />
+      <TestMethod codeBase="C:\Users\yosti\Proyectos\LogiMarket360\tests\LogiMarket.Tests\bin\Debug\net8.0\LogiMarket.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LogiMarket.Tests.Acceptance.ValoracionTests" name="ValidarRecalculaElBorradorDesdeSusInstantaneas" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="3cc4a277-bf91-9390-80e7-fee12df7d1af" executionId="ed2290b4-df91-4e58-9958-b3c5e366e46c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="231e11d1-4e73-b845-799e-36839694439b" executionId="9c3f518b-155c-43f2-bcda-de69ad048ece" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Resultados sin formato de lista" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Todos los resultados cargados" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="2" executed="2" passed="0" failed="2" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.34)&#xD;
+[xUnit.net 00:00:00.70]   Discovering: LogiMarket.Tests&#xD;
+[xUnit.net 00:00:00.81]   Discovered:  LogiMarket.Tests&#xD;
+[xUnit.net 00:00:00.82]   Starting:    LogiMarket.Tests&#xD;
+[xUnit.net 00:00:05.21]       Assert.Equal() Failure: Values differ&#xD;
+[xUnit.net 00:00:05.21]       Expected: 113&#xD;
+[xUnit.net 00:00:05.21]       Actual:   59.0&#xD;
+[xUnit.net 00:00:05.21]       Stack Trace:&#xD;
+[xUnit.net 00:00:05.22]         C:\Users\yosti\Proyectos\LogiMarket360\tests\LogiMarket.Tests\Acceptance\ValoracionTests.cs(40,0): at LogiMarket.Tests.Acceptance.ValoracionTests.ValidarRecalculaElBorradorDesdeSusInstantaneas()&#xD;
+[xUnit.net 00:00:05.22]         C:\Users\yosti\Proyectos\LogiMarket360\tests\LogiMarket.Tests\Acceptance\ValoracionTests.cs(40,0): at LogiMarket.Tests.Acceptance.ValoracionTests.ValidarRecalculaElBorradorDesdeSusInstantaneas()&#xD;
+[xUnit.net 00:00:05.22]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:05.25]       Assert.Throws() Failure: No exception was thrown&#xD;
+[xUnit.net 00:00:05.25]       Expected: typeof(System.InvalidOperationException)&#xD;
+[xUnit.net 00:00:05.25]       Stack Trace:&#xD;
+[xUnit.net 00:00:05.25]         C:\Users\yosti\Proyectos\LogiMarket360\tests\LogiMarket.Tests\Acceptance\ValoracionTests.cs(22,0): at LogiMarket.Tests.Acceptance.ValoracionTests.CantidadEditadaExigeRevalorarAntesDeValidar()&#xD;
+[xUnit.net 00:00:05.25]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+[xUnit.net 00:00:05.25]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)&#xD;
+[xUnit.net 00:00:05.25]   Finished:    LogiMarket.Tests&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="PC_ALAN" outcome="Error" timestamp="2026-11-21T14:31:02.9678546-05:00">
+        <Text>[xUnit.net 00:00:05.21]     LogiMarket.Tests.Acceptance.ValoracionTests.ValidarRecalculaElBorradorDesdeSusInstantaneas [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="PC_ALAN" outcome="Error" timestamp="2026-11-21T14:31:03.0772276-05:00">
+        <Text>[xUnit.net 00:00:05.25]     LogiMarket.Tests.Acceptance.ValoracionTests.CantidadEditadaExigeRevalorarAntesDeValidar [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

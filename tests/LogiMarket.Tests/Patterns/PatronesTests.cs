@@ -17,7 +17,12 @@ namespace LogiMarket.Tests.Patterns;
 
 public class PatronesTests
 {
-    private static Pedido Crear(int cantidad = 1) => new PedidoBuilder().Para(new Cliente("Ana", CategoriaCliente.VIP)).ConEntrega(TipoEntrega.ESTANDAR).Agregar(new ProductoSimple("P01", "Mouse", 20, .2m), cantidad).Construir();
+    private static Pedido Crear(int cantidad = 1)
+    {
+        var pedido = new PedidoBuilder().Para(new Cliente("Ana", CategoriaCliente.VIP)).ConEntrega(TipoEntrega.ESTANDAR).Agregar(new ProductoSimple("P01", "Mouse", 20, .2m), cantidad).Construir();
+        pedido.Valorar(new([new Mayorista15(), new Vip10(), new SinDescuento()]), 5);
+        return pedido;
+    }
     [Fact]
     public void P12_FamiliasCompatibles()
     {
