@@ -29,8 +29,8 @@ public sealed class VistaCarrito : UserControl
         entrega.Items.AddRange(Enum.GetValues<TipoEntrega>().Cast<object>().ToArray()); entrega.SelectedIndex = 0;
         var barra = Ui.Barra(); barra.Controls.AddRange([new Label { Text = "Cliente", AutoSize = true }, cliente, entrega, sku, cantidad]);
         barra.Controls.Add(Ui.Boton("Agregar / cambiar cantidad", Agregar)); barra.Controls.Add(Ui.Boton("Quitar linea", Quitar));
-        barra.Controls.Add(Ui.Boton("Recalcular", Cambiar)); barra.Controls.Add(Ui.Boton("Deshacer", async () => await Restaurar(historial.Deshacer())));
-        barra.Controls.Add(Ui.Boton("Rehacer", async () => await Restaurar(historial.Rehacer())));
+        barra.Controls.Add(Ui.Boton("Recalcular", Cambiar)); barra.Controls.Add(Ui.Boton("Deshacer", async () => await Restaurar(historial.DeshacerCompleto())));
+        barra.Controls.Add(Ui.Boton("Rehacer", async () => await Restaurar(historial.RehacerCompleto())));
         barra.Controls.Add(Ui.Boton("Guardar borrador", Guardar)); barra.Controls.Add(Ui.Boton("Nuevo", Nuevo));
         Controls.Add(grid); Controls.Add(totales); Controls.Add(barra);
         mediator.Registrar(Refrescar); mediator.BorradorSolicitado += Cargar;
@@ -60,7 +60,7 @@ public sealed class VistaCarrito : UserControl
         try { await Cambiar(); } catch { lineas = anteriores; throw; }
     }
     private async Task Quitar()
-    { if (grid.CurrentRow?.DataBoundItem is LineaEntrada linea) { lineas.Remove(linea); if (lineas.Count == 0) { Ui.Cargar(grid, lineas); totales.Text = "Sin lineas"; TieneCambios = true; } else await Cambiar(); } }
+    { if (grid.CurrentRow?.DataBoundItem is LineaEntrada linea) { lineas.Remove(linea); if (lineas.Count == 0) { historial.CapturarVacio(); Ui.Cargar(grid, lineas); totales.Text = "Sin lineas"; TieneCambios = true; } else await Cambiar(); } }
     private async Task Cambiar()
     {
         var pedido = await operaciones.Consultar(s => s.GetRequiredService<ServicioPedidos>().Preparar(Entrada()));
@@ -71,8 +71,9 @@ public sealed class VistaCarrito : UserControl
         Ui.Cargar(grid, lineas);
         totales.Text = $"Subtotal USD {pedido.Subtotal:N2}   Descuento USD {pedido.Descuento:N2}   Envio USD {pedido.Tarifa:N2}   Total USD {pedido.Total:N2}";
     }
-    private Task Restaurar(Pedido pedido)
+    private Task Restaurar(Pedido? pedido)
     {
+        if (pedido is null) { lineas.Clear(); Ui.Cargar(grid, lineas); totales.Text = "Sin lineas"; TieneCambios = true; return Task.CompletedTask; }
         lineas = pedido.Detalles.Select(d => new LineaEntrada(d.Sku, d.Cantidad)).ToList();
         cliente.SelectedItem = cliente.Items.Cast<OpcionCliente>().FirstOrDefault(c => c.Id == pedido.ClienteId); entrega.SelectedItem = pedido.Entrega;
         Mostrar(pedido); TieneCambios = true; return Task.CompletedTask;

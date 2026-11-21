@@ -17,6 +17,7 @@ public sealed class SalidaVistaPrevia(IWin32Window propietario) : ISalidaDocumen
     {
         using var vista = new Form { Text = nombre, Width = 760, Height = 600, StartPosition = FormStartPosition.CenterParent };
         vista.Controls.Add(new TextBox { Dock = DockStyle.Fill, Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Both, Text = contenido.Replace("\n", Environment.NewLine), Font = new Font("Consolas", 11) });
+        vista.Shown += (_, _) => ((TextBox)vista.Controls[0]).Select(0, 0);
         vista.ShowDialog(propietario); return Task.CompletedTask;
     }
 }
@@ -106,6 +107,7 @@ public sealed class VistaAuditoria : UserControl
         var bytesSin = GC.GetAllocatedBytesForCurrentThread() - antes; antes = GC.GetAllocatedBytesForCurrentThread();
         var con = Enumerable.Range(0, 1000).Select(i => new FilaVisual(i, fabrica.Obtener("P01", "Mouse USB"), 1, 20m)).ToArray();
         var bytesCon = GC.GetAllocatedBytesForCurrentThread() - antes; Ui.Cargar(flyweight, con); GC.KeepAlive(sin);
+        if (flyweight.Parent is TabPage pagina && pagina.Parent is TabControl pestanas) pestanas.SelectedTab = pagina;
         MessageBox.Show($"Filas: 1000\nInstancias: {fabrica.Instancias}\nReferenceEquals: {ReferenceEquals(con[0].Metadatos, con[999].Metadatos)}\nSin compartir: {bytesSin} bytes asignados\nCompartido: {bytesCon} bytes asignados\nNo representa memoria total del proceso."); return Task.CompletedTask;
     }
     private sealed record FilaVisual(int Fila, MetadatosSku Metadatos, int Cantidad, decimal Precio);

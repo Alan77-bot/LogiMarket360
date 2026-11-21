@@ -16,22 +16,27 @@ public sealed class OperacionesUi(IServiceProvider proveedor)
     }
 }
 // Mediator: las vistas se registran y nunca llaman a otras vistas directamente.
-public sealed class FormularioPrincipalMediator
+public sealed class FormularioPrincipalMediator : LogiMarket.Application.Eventos.MediadorVistas
 {
     public event Func<LogiMarket.Domain.Pedidos.Pedido, Task>? BorradorSolicitado;
     public Task EditarBorrador(LogiMarket.Domain.Pedidos.Pedido pedido) => BorradorSolicitado?.Invoke(pedido) ?? Task.CompletedTask;
-    private readonly List<Func<Task>> vistas = [];
-    public void Registrar(Func<Task> refrescar) => vistas.Add(refrescar);
-    public async Task Actualizar() { foreach (var vista in vistas) await vista(); }
 }
 public static class Ui
 {
     public static readonly Color Fondo = Color.FromArgb(244, 247, 251);
     public static readonly Color Azul = Color.FromArgb(28, 68, 111);
-    public static DataGridView Grilla() => new() { Dock = DockStyle.Fill, ReadOnly = true, AutoGenerateColumns = true,
-        AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill, SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+    public static DataGridView Grilla()
+    {
+        var grid = new DataGridView { Dock = DockStyle.Fill, ReadOnly = true, AutoGenerateColumns = true,
+        AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells, SelectionMode = DataGridViewSelectionMode.FullRowSelect,
         MultiSelect = false, AllowUserToAddRows = false, AllowUserToDeleteRows = false, BackgroundColor = Color.White,
         BorderStyle = BorderStyle.None, RowHeadersVisible = false, AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells };
+        grid.CellFormatting += (_, e) => {
+            if (e.Value is DateTimeOffset fecha)
+            { e.Value = TimeZoneInfo.ConvertTime(fecha, TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time")).ToString("yyyy-MM-dd HH:mm"); e.FormattingApplied = true; }
+        };
+        return grid;
+    }
     public static Button Boton(string texto, Func<Task> accion)
     {
         var boton = new Button { Text = texto, AutoSize = true, Height = 36, FlatStyle = FlatStyle.Flat, Padding = new Padding(8), BackColor = Color.White };
@@ -45,7 +50,12 @@ public static class Ui
         var seleccion = grid.CurrentRow?.Cells[0].Value;
         grid.DataSource = datos.ToList();
         foreach (DataGridViewColumn c in grid.Columns)
-        { if (c.ValueType == typeof(decimal)) c.DefaultCellStyle.Format = "N2"; if (c.Name is "Id" or "Version" or "Hash") c.Visible = false; }
+        {
+            if (c.ValueType == typeof(decimal)) c.DefaultCellStyle.Format = "N2";
+            if (c.ValueType == typeof(Guid) || c.ValueType == typeof(Guid?) || c.Name is "Version" or "Hash") c.Visible = false;
+            c.HeaderText = c.Name switch { "ClienteNombre" => "Cliente", "ClienteVip" => "VIP", "EsKit" => "Kit", "EntregadoEn" => "Entrega registrada", _ => c.Name };
+            // AllCells evita redistribuir columnas de vistas que aun no tienen ventana.
+        }
         if (seleccion is not null) foreach (DataGridViewRow fila in grid.Rows) if (Equals(fila.Cells[0].Value, seleccion)) { grid.CurrentCell = fila.Cells.Cast<DataGridViewCell>().First(c => c.Visible); break; }
     }
 }
@@ -59,9 +69,23 @@ public sealed class DialogoCampos : Form
         Text = titulo; Width = 540; Height = 490; StartPosition = FormStartPosition.CenterParent; Font = new Font("Segoe UI", 10);
         tabla.ColumnStyles.Add(new(SizeType.Absolute, 160)); tabla.ColumnStyles.Add(new(SizeType.Percent, 100));
         var pie = Ui.Barra(); pie.Dock = DockStyle.Bottom;
-        var aceptar = new Button { Text = "Aceptar", DialogResult = DialogResult.OK, AutoSize = true };
+        var aceptar = new Button { Text = "Aceptar", AutoSize = true };
+        var errores = new ErrorProvider { ContainerControl = this, BlinkStyle = ErrorBlinkStyle.NeverBlink };
+        aceptar.Click += (_, _) => {
+            var valido = true;
+            foreach (var (nombre, control) in campos)
+            {
+                var error = control is TextBox texto && string.IsNullOrWhiteSpace(texto.Text) ? "Campo obligatorio."
+                    : control is ComboBox combo && combo.SelectedItem is null ? "Seleccione una opcion."
+                    : control is NumericUpDown numero && (nombre == "Precio" && numero.Value <= 0 || nombre.StartsWith("Cantidad") && numero.Value == 0) ? "Valor invalido." : "";
+                errores.SetError(control, error); valido &= error.Length == 0;
+            }
+            if (valido) DialogResult = DialogResult.OK;
+        };
+        Disposed += (_, _) => errores.Dispose();
         pie.Controls.Add(aceptar); pie.Controls.Add(new Button { Text = "Cancelar", DialogResult = DialogResult.Cancel, AutoSize = true });
         Controls.Add(tabla); Controls.Add(pie); AcceptButton = aceptar;
+        Shown += (_, _) => Height = Math.Clamp(140 + campos.Count * 48, 210, 650);
     }
     public DialogoCampos Texto(string nombre, string valor = "") => Agregar(nombre, new TextBox { Text = valor, Dock = DockStyle.Top });
     public DialogoCampos Numero(string nombre, decimal valor = 0, int decimales = 0, decimal minimo = 0) => Agregar(nombre, new NumericUpDown { Value = valor, Minimum = minimo, Maximum = 10000000, DecimalPlaces = decimales, Dock = DockStyle.Top });

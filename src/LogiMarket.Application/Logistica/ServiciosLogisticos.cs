@@ -28,7 +28,7 @@ public sealed class ServicioDespachos(IRepositorio repo, ITransacciones tx, Auto
 }
 
 // Template Method: el esqueleto es comun; cada motivo decide plazo y condicion.
-public abstract class ProcesarDevolucion(IRepositorio repo, ITransacciones tx, Autorizador auth, IReloj reloj)
+public abstract class ProcesarDevolucion(IRepositorio repo, ITransacciones tx, Autorizador auth, IReloj reloj, IReembolsosSimulados reembolsos)
 {
     protected abstract MotivoDevolucion Motivo { get; }
     protected abstract void Inspeccionar(TimeSpan antiguedad, bool sinUso);
@@ -42,7 +42,9 @@ public abstract class ProcesarDevolucion(IRepositorio repo, ITransacciones tx, A
             var edad = reloj.Ahora - pedido.EntregadoEn.Value;
             if (edad < TimeSpan.Zero) throw new InvalidOperationException("Fecha de entrega futura.");
             Inspeccionar(edad, sinUso);
-            var devolucion = new Devolucion(id, Motivo, pedido.Subtotal - pedido.Descuento, $"REEMBOLSO-{id:N}", reloj.Ahora);
+            var importe = pedido.Subtotal - pedido.Descuento;
+            var referencia = await reembolsos.ReembolsarAsync(id, importe);
+            var devolucion = new Devolucion(id, Motivo, importe, referencia, reloj.Ahora);
             var productos = await repo.Productos();
             foreach (var grupo in pedido.Detalles.SelectMany(d => d.Componentes).GroupBy(c => c.Sku))
             {
@@ -53,13 +55,13 @@ public abstract class ProcesarDevolucion(IRepositorio repo, ITransacciones tx, A
         });
     }
 }
-public sealed class DevolucionDefecto(IRepositorio r, ITransacciones t, Autorizador a, IReloj reloj) : ProcesarDevolucion(r, t, a, reloj)
+public sealed class DevolucionDefecto(IRepositorio r, ITransacciones t, Autorizador a, IReloj reloj, IReembolsosSimulados reembolsos) : ProcesarDevolucion(r, t, a, reloj, reembolsos)
 {
     protected override MotivoDevolucion Motivo => MotivoDevolucion.DEFECTO;
     protected override void Inspeccionar(TimeSpan antiguedad, bool sinUso)
     { if (antiguedad > TimeSpan.FromDays(30)) throw new InvalidOperationException("Defecto fuera de 30 dias."); }
 }
-public sealed class DevolucionArrepentimiento(IRepositorio r, ITransacciones t, Autorizador a, IReloj reloj) : ProcesarDevolucion(r, t, a, reloj)
+public sealed class DevolucionArrepentimiento(IRepositorio r, ITransacciones t, Autorizador a, IReloj reloj, IReembolsosSimulados reembolsos) : ProcesarDevolucion(r, t, a, reloj, reembolsos)
 {
     protected override MotivoDevolucion Motivo => MotivoDevolucion.ARREPENTIMIENTO;
     protected override void Inspeccionar(TimeSpan antiguedad, bool sinUso)

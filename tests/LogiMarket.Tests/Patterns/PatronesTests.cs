@@ -117,6 +117,12 @@ public class PatronesTests
         historial.Bloquear(); Assert.Throws<InvalidOperationException>(() => historial.Deshacer());
     }
     [Fact]
+    public void MementoPermiteDeshacerEliminarLaUltimaLinea()
+    {
+        var historial = new HistorialBorrador(); historial.Capturar(Crear()); historial.CapturarVacio();
+        Assert.Single(historial.DeshacerCompleto()!.Detalles); Assert.Null(historial.RehacerCompleto());
+    }
+    [Fact]
     public void P31_StateRechazaRetrocesoYRepeticion()
     {
         var p = Crear(); Assert.Throws<InvalidOperationException>(() => p.Transicionar(EstadoPedido.DESPACHADO, "x", DateTimeOffset.UtcNow));

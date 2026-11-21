@@ -10,6 +10,17 @@ namespace LogiMarket.Tests.Acceptance;
 
 public class IntegridadTests
 {
+    private sealed class ReembolsoConFallo : IReembolsosSimulados
+    { public Task<string> ReembolsarAsync(Guid pedido, decimal importe) => throw new IOException("Reembolso indisponible."); }
+    [Fact]
+    public async Task FalloDeReembolsoNoReintegraStock()
+    {
+        await using var e = new Escenario(s => s.AddSingleton<IReembolsosSimulados, ReembolsoConFallo>()); await e.Iniciar(); var id = await e.Pagar();
+        await e.Usar(s => s.GetRequiredService<LogiMarket.Application.Logistica.ServicioDespachos>().Despachar(id));
+        await e.Usar(s => s.GetRequiredService<LogiMarket.Application.Logistica.ServicioDespachos>().Entregar(id));
+        await Assert.ThrowsAsync<IOException>(() => e.Usar(s => s.GetRequiredService<LogiMarket.Application.Logistica.DevolucionDefecto>().Ejecutar(id, true)));
+        await e.Usar(async s => { Assert.Null(await s.GetRequiredService<IRepositorio>().DevolucionPorPedido(id)); Assert.Equal(7, (await s.GetRequiredService<IRepositorio>().Productos()).Single(p => p.Sku == "P01").Stock); Assert.DoesNotContain(await s.GetRequiredService<IConsultasOperativas>().Eventos(), x => x.Tipo == "DevolucionAceptada"); });
+    }
     private sealed class PasarelaConFallo : IPasarelaPago
     { public Task<ResultadoCobro> CobrarAsync(decimal importe, string clave) => throw new IOException("Colaborador indisponible."); }
     [Fact]

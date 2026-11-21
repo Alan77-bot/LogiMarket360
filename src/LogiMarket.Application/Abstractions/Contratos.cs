@@ -38,6 +38,8 @@ public interface IHashContrasena
 public interface IReloj { DateTimeOffset Ahora { get; } }
 public interface IPasarelaPago
 { Task<ResultadoCobro> CobrarAsync(decimal importe, string clave); }
+public interface IReembolsosSimulados
+{ Task<string> ReembolsarAsync(Guid pedido, decimal importe); }
 public sealed record ResultadoCobro(bool Aceptado, string Referencia, string Mensaje);
 public interface IProcesadorOutbox { Task<int> Procesar(); }
 public interface ISuscriptorEvento

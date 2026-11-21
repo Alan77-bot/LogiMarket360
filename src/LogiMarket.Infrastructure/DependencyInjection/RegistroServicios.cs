@@ -34,6 +34,7 @@ public static class RegistroServicios
         servicios.AddSingleton<IPoliticaDescuento, Mayorista15>(); servicios.AddSingleton<IPoliticaDescuento, Vip10>(); servicios.AddSingleton<IPoliticaDescuento, SinDescuento>();
         servicios.AddSingleton<CalculadoraPrecios>(); servicios.AddSingleton<IFabricaEntrega, EntregaEstandarFactory>(); servicios.AddSingleton<IFabricaEntrega, EntregaExpresFactory>();
         servicios.AddSingleton<PasarelaLegadaSimulada>(); servicios.AddSingleton<PasarelaLegadaAdapter>(); servicios.AddSingleton<PasarelaAlternativaSimulada>(); servicios.AddSingleton<SelectorPasarela>();
+        servicios.AddSingleton<IReembolsosSimulados, ReembolsosSimulados>();
         servicios.AddScoped<IPasarelaPago>(s => new PagoAutorizadoProxy(s.GetRequiredService<Autorizador>(), new AuditoriaPagoDecorator(s.GetRequiredService<SelectorPasarela>(), s.GetRequiredService<IBitacora>(), s.GetRequiredService<SesionActual>())));
         servicios.AddScoped<ServicioCatalogo>(); servicios.AddScoped<ServicioClientes>(); servicios.AddScoped<ServicioPedidos>(); servicios.AddScoped<ConfirmacionPedidoFacade>();
         servicios.AddScoped<ServicioDespachos>(); servicios.AddScoped<ServicioInventario>(); servicios.AddScoped<DevolucionDefecto>(); servicios.AddScoped<DevolucionArrepentimiento>(); servicios.AddScoped<InvocadorComandos>();

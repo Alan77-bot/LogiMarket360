@@ -31,7 +31,11 @@ public sealed class FormularioPrincipal : Form
         { var boton = Ui.Boton(nombre, () => { contenido.Controls.Clear(); contenido.Controls.Add(vista); titulo.Text = nombre; return Task.CompletedTask; }); boton.Width = 190; menu.Controls.Add(boton); }
         menu.Controls.Add(Ui.Boton("Cerrar sesion", () => { Close(); return Task.CompletedTask; }));
         Controls.Add(contenido); Controls.Add(titulo); Controls.Add(menu); contenido.Controls.Add(vistas[0].Vista); titulo.Text = vistas[0].Nombre;
-        Shown += async (_, _) => { try { await operaciones.Ejecutar(_ => Task.CompletedTask); await mediator.Actualizar(); } catch (Exception ex) { MessageBox.Show(ex.GetBaseException().Message); } };
+        Shown += async (_, _) => { try { await operaciones.Ejecutar(_ => Task.CompletedTask); await mediator.Actualizar(); } catch (Exception ex) {
+            var directorio = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "LogiMarket360");
+            File.AppendAllText(Path.Combine(directorio, "ui-error.log"), DateTimeOffset.UtcNow + " " + ex + Environment.NewLine);
+            MessageBox.Show(ex.Message + " " + ex.GetBaseException().Message);
+        } };
         FormClosing += (_, e) => { if (carrito.TieneCambios && !Ui.Confirmar("Hay cambios sin guardar en el carrito. Cerrar y descartarlos?")) e.Cancel = true; };
     }
 }

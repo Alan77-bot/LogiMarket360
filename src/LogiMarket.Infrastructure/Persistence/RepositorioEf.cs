@@ -1,5 +1,6 @@
 using System.Data;
 using LogiMarket.Application.Abstractions;
+using LogiMarket.Application.Seguridad;
 using LogiMarket.Domain.Modelo;
 using LogiMarket.Domain.Pedidos;
 using Microsoft.Data.Sqlite;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LogiMarket.Infrastructure.Persistence;
 
-public sealed class RepositorioEf(LogiMarketDbContext db) : IRepositorio, ITransacciones, IConsultasOperativas, IRegistroRecepciones
+public sealed class RepositorioEf(LogiMarketDbContext db, SesionActual? sesion = null) : IRepositorio, ITransacciones, IConsultasOperativas, IRegistroRecepciones
 {
     public Task<List<Producto>> Productos() => db.Productos.ToListAsync();
     public Task<List<Kit>> Kits() => db.Kits.Include(x => x.Componentes).ToListAsync();
@@ -38,7 +39,14 @@ public sealed class RepositorioEf(LogiMarketDbContext db) : IRepositorio, ITrans
         var conexion = (SqliteConnection)db.Database.GetDbConnection();
         await using var transaccion = conexion.BeginTransaction(IsolationLevel.Serializable, deferred: false);
         await db.Database.UseTransactionAsync(transaccion);
-        try { var resultado = await operacion(); await db.SaveChangesAsync(); await transaccion.CommitAsync(); return resultado; }
+        try
+        {
+            var resultado = await operacion(); db.ChangeTracker.DetectChanges();
+            var cambios = db.ChangeTracker.Entries().Where(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted)
+                .Where(e => e.Entity is not Auditoria).Select(e => $"{e.Metadata.ClrType.Name}:{e.State}").Distinct().ToArray();
+            if (cambios.Length > 0) db.Add(new Auditoria(sesion?.Nombre ?? "SISTEMA", "TRANSACCION", string.Join(", ", cambios), Guid.NewGuid().ToString()));
+            await db.SaveChangesAsync(); await transaccion.CommitAsync(); return resultado;
+        }
         catch
         {
             var trazas = db.ChangeTracker.Entries<Auditoria>().Where(e => e.State == EntityState.Added).Select(e => e.Entity).ToList();

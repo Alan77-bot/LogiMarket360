@@ -88,7 +88,8 @@ public sealed class VistaInventario : UserControl
     public async Task Refrescar()
     {
         var datos = await operaciones.Consultar(async s => (Productos: await s.GetRequiredService<IRepositorio>().Productos(), Movimientos: await s.GetRequiredService<IConsultasOperativas>().Movimientos()));
-        Ui.Cargar(stock, datos.Productos); Ui.Cargar(movimientos, datos.Movimientos.OrderByDescending(m => m.Fecha));
+        Ui.Cargar(stock, datos.Productos.OrderBy(p => p.Sku));
+        Ui.Cargar(movimientos, datos.Movimientos.OrderByDescending(m => m.Fecha).Select(m => new { Sku = datos.Productos.Single(p => p.Id == m.ProductoId).Sku, m.Cantidad, m.Motivo, m.Referencia, m.Fecha }));
     }
     private async Task Mover()
     {
