@@ -11,3 +11,5 @@ Se ejecuto visualmente la venta de Ana por USD 59.00, despacho, entrega, devoluc
 La revision visual no certifica todas las combinaciones posibles de resolucion, escala y accesibilidad. El registro de riesgos distingue correcciones de diseno frente a pruebas rojas efectivamente ejecutadas.
 
 Se corrigio ademas la valoracion de cantidades editadas: las dos pruebas previas fallidas se conservan y ahora pasan dentro del conjunto completo. Los importes se recalculan desde las instantaneas antes de validar.
+
+22 de noviembre de 2026: v1.1.0 (2d35606) verificada nuevamente: 58/58 pruebas, cero omitidas, y compilacion limpia del ZIP publicado con cero errores y advertencias. Once vistas instanciadas con base temporal y revisadas en ventanas de 1400x850 y 1050x650. El recorrido programatico SelectNextControl no reemplaza una prueba manual de TAB/foco ni una revision de DPI real. PDF final pendiente por indicacion del usuario. Ver VERIFICACION_V1_1_0.md para limites y evidencias.

@@ -1,0 +1,22 @@
+Panel general; ancho=1400; controles=3; avances SelectNextControl=3; destinos distintos=2
+Panel general; ancho=1050; controles=3; avances SelectNextControl=3; destinos distintos=2
+Catalogo y kits; ancho=1400; controles=7; avances SelectNextControl=7; destinos distintos=7
+Catalogo y kits; ancho=1050; controles=7; avances SelectNextControl=7; destinos distintos=7
+Clientes; ancho=1400; controles=5; avances SelectNextControl=5; destinos distintos=5
+Clientes; ancho=1050; controles=5; avances SelectNextControl=5; destinos distintos=5
+Carrito; ancho=1400; controles=13; avances SelectNextControl=13; destinos distintos=12
+Carrito; ancho=1050; controles=13; avances SelectNextControl=13; destinos distintos=12
+Pedidos; ancho=1400; controles=8; avances SelectNextControl=8; destinos distintos=8
+Pedidos; ancho=1050; controles=8; avances SelectNextControl=8; destinos distintos=8
+Cobro; ancho=1400; controles=5; avances SelectNextControl=5; destinos distintos=5
+Cobro; ancho=1050; controles=5; avances SelectNextControl=5; destinos distintos=5
+Despacho y entrega; ancho=1400; controles=7; avances SelectNextControl=7; destinos distintos=7
+Despacho y entrega; ancho=1050; controles=7; avances SelectNextControl=7; destinos distintos=7
+Devoluciones; ancho=1400; controles=5; avances SelectNextControl=5; destinos distintos=5
+Devoluciones; ancho=1050; controles=5; avances SelectNextControl=5; destinos distintos=5
+Inventario; ancho=1400; controles=5; avances SelectNextControl=5; destinos distintos=3
+Inventario; ancho=1050; controles=5; avances SelectNextControl=5; destinos distintos=3
+Reportes; ancho=1400; controles=7; avances SelectNextControl=7; destinos distintos=7
+Reportes; ancho=1050; controles=7; avances SelectNextControl=7; destinos distintos=7
+Auditoria y demo; ancho=1400; controles=5; avances SelectNextControl=5; destinos distintos=5
+Auditoria y demo; ancho=1050; controles=5; avances SelectNextControl=5; destinos distintos=5

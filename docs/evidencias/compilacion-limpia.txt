@@ -1,22 +1,22 @@
-Archivo: C:\Users\yosti\Proyectos\LogiMarket360\tmp\codigo-verificado.zip
-SHA256: DA677B920D7709F2518AACA1187C76B152427BC84CE9281397F2EDFF2C40A365
+Archivo: C:\Users\yosti\Proyectos\LogiMarket360\output\LogiMarket360-v1.1.0.zip
+SHA256: 70CE4E938F00A38AAD7ED5A1388EA8A4710BF59E646662A6B31390187B14EBC9
 Proyectos: 5
-Copia sin bin/obj: C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-63b0076db74c4633aab5d2243f56bc15
+Copia sin bin/obj: C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-c74a7d0b8e634b33858d34d65c1d8ba2
   Determinando los proyectos que se van a restaurar...
-  Se ha restaurado C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-63b0076db74c4633aab5d2243f56bc15\src\LogiMarket.Application\LogiMarket.Application.csproj (en 186 ms).
-  Se ha restaurado C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-63b0076db74c4633aab5d2243f56bc15\src\LogiMarket.Domain\LogiMarket.Domain.csproj (en 174 ms).
-  Se ha restaurado C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-63b0076db74c4633aab5d2243f56bc15\src\LogiMarket.WinForms\LogiMarket.WinForms.csproj (en 543 ms).
-  Se ha restaurado C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-63b0076db74c4633aab5d2243f56bc15\src\LogiMarket.Infrastructure\LogiMarket.Infrastructure.csproj (en 619 ms).
-  Se ha restaurado C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-63b0076db74c4633aab5d2243f56bc15\tests\LogiMarket.Tests\LogiMarket.Tests.csproj (en 2.24 s).
-  LogiMarket.Domain -> C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-63b0076db74c4633aab5d2243f56bc15\src\LogiMarket.Domain\bin\Debug\net8.0\LogiMarket.Domain.dll
-  LogiMarket.Application -> C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-63b0076db74c4633aab5d2243f56bc15\src\LogiMarket.Application\bin\Debug\net8.0\LogiMarket.Application.dll
-  LogiMarket.Infrastructure -> C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-63b0076db74c4633aab5d2243f56bc15\src\LogiMarket.Infrastructure\bin\Debug\net8.0\LogiMarket.Infrastructure.dll
-  LogiMarket.WinForms -> C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-63b0076db74c4633aab5d2243f56bc15\src\LogiMarket.WinForms\bin\Debug\net8.0-windows\LogiMarket.WinForms.dll
-  LogiMarket.Tests -> C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-63b0076db74c4633aab5d2243f56bc15\tests\LogiMarket.Tests\bin\Debug\net8.0\LogiMarket.Tests.dll
+  Se ha restaurado C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-c74a7d0b8e634b33858d34d65c1d8ba2\src\LogiMarket.Application\LogiMarket.Application.csproj (en 205 ms).
+  Se ha restaurado C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-c74a7d0b8e634b33858d34d65c1d8ba2\src\LogiMarket.Domain\LogiMarket.Domain.csproj (en 198 ms).
+  Se ha restaurado C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-c74a7d0b8e634b33858d34d65c1d8ba2\src\LogiMarket.WinForms\LogiMarket.WinForms.csproj (en 743 ms).
+  Se ha restaurado C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-c74a7d0b8e634b33858d34d65c1d8ba2\src\LogiMarket.Infrastructure\LogiMarket.Infrastructure.csproj (en 819 ms).
+  Se ha restaurado C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-c74a7d0b8e634b33858d34d65c1d8ba2\tests\LogiMarket.Tests\LogiMarket.Tests.csproj (en 2.2 s).
+  LogiMarket.Domain -> C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-c74a7d0b8e634b33858d34d65c1d8ba2\src\LogiMarket.Domain\bin\Debug\net8.0\LogiMarket.Domain.dll
+  LogiMarket.Application -> C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-c74a7d0b8e634b33858d34d65c1d8ba2\src\LogiMarket.Application\bin\Debug\net8.0\LogiMarket.Application.dll
+  LogiMarket.Infrastructure -> C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-c74a7d0b8e634b33858d34d65c1d8ba2\src\LogiMarket.Infrastructure\bin\Debug\net8.0\LogiMarket.Infrastructure.dll
+  LogiMarket.WinForms -> C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-c74a7d0b8e634b33858d34d65c1d8ba2\src\LogiMarket.WinForms\bin\Debug\net8.0-windows\LogiMarket.WinForms.dll
+  LogiMarket.Tests -> C:\Users\yosti\Proyectos\LogiMarket360\tmp\verificacion-c74a7d0b8e634b33858d34d65c1d8ba2\tests\LogiMarket.Tests\bin\Debug\net8.0\LogiMarket.Tests.dll
 
 Compilación correcta.
     0 Advertencia(s)
     0 Errores
 
-Tiempo transcurrido 00:00:23.29
+Tiempo transcurrido 00:00:12.63
 RESULTADO: APROBADO
