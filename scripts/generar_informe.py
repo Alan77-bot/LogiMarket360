@@ -2,7 +2,6 @@
 from pathlib import Path
 import json
 import xml.etree.ElementTree as ET
-from datetime import datetime
 from xml.sax.saxutils import escape
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, Image, KeepTogether
 from reportlab.lib import colors
@@ -31,20 +30,53 @@ mapa = {
  'P32':'P32_', 'P33':'P33_', 'P34':'P27_P34', 'P35':'P35_', 'P36':'P36_', 'P37':'P37_', 'P38':'P38_'
 }
 notas = {
+ 'P01':'Base nueva creada por migraciones, cinco productos, dos kits, cuatro usuarios y ninguna migracion pendiente; seed repetido sin duplicados.',
+ 'P02':'Total 59.00, PAGADO y un pago; stock P01=7, P02=4 y P03=19 comprobado.',
+ 'P03':'Total 102.00 y un pago; stock P04=2 y P05=28 comprobado.',
+ 'P04':'Total 90.00, descuento 15.00 y stock P03=10 comprobado.',
+ 'P05':'Rechazo por P02; sin pago, movimientos ni evento de exito y sin descontar P01.',
+ 'P06':'Cobro rechazado, estado VALIDADO e inventario conservado; sin pago aprobado ni Outbox de exito.',
+ 'P07':'Mismo identificador de pago en reintentos; un pago y tres movimientos, uno por SKU.',
+ 'P08':'Cancelar y editar el pedido pagado provocan rechazo; total e historial conservados.',
+ 'P09':'Despacho sin pago rechazado; BODEGA completa despacho y entrega del pedido pagado.',
+ 'P10':'Otro proveedor DI abre la misma SQLite y recupera pedido PAGADO, pago, stock P01=7 y auditoria.',
+ 'P11':'EMAIL y SMS registran el canal elegido; una sola notificacion por evento.',
+ 'P12':'ESTANDAR: tarifa 5, plazo 3 y prefijo STD. EXPRES: tarifa 12, plazo 1 y prefijo EXP.',
+ 'P13':'Constructor sin cliente o sin lineas rechazado; agregado completo construido.',
  'P14':'Copia profunda comprobada con cambio de cantidad y arbol historico serializado.',
+ 'P15':'Dos ambitos reciben la misma instancia; 1000 registros concurrentes del mismo evento cuentan un pago.',
+ 'P16':'Ambos proveedores aceptan 59.00, conservan referencia en el reintento y rechazan entradas invalidas.',
  'P17':'Cuatro combinaciones ejecutadas; vistas previas reales y TXT en docs/evidencias/comprobantes.',
+ 'P18':'Precios 50/60, expansion P01/P02/P03 y cantidades propagadas; ciclo indirecto rechazado.',
+ 'P19':'Secuencia observada INICIO, PASARELA y FIN/ERROR, conservando el resultado del proveedor.',
+ 'P20':'Fallo del colaborador deja estado VALIDADO, stock P01=8, sin pago ni evento de exito.',
  'P21':'UI: 1000 filas, 1 instancia, ReferenceEquals=True; 104176 frente a 56360 bytes asignados. Medicion de asignaciones del hilo.',
+ 'P22':'CONSULTA y BODEGA reciben UnauthorizedAccessException antes del proveedor; ningun LOG de COBRO.',
+ 'P23':'Primero se informa CLIENTE y, al corregirlo, STOCK; no se invoca cobro.',
  'P24':'El boton de cobro y el test invocan ConfirmarPedidoCommand mediante InvocadorComandos.',
+ 'P25':'ESTADO = PAGADO AND TOTAL >= 50 acepta el pedido pagado de 65.00 y descarta el filtro de BORRADOR.',
+ 'P26':'AND tiene prioridad sobre OR; parentesis cambian el resultado y sintaxis invalida genera FormatException.',
+ 'P27':'Iterador propio produce P01, P02 y P03, termina y permanece terminado.',
  'P28':'Verificacion automatica del coordinador y capturas 07, 08 y 09: pedido pagado, stock actualizado y metrica de pago=1.',
+ 'P29':'Tres estados: deshacer devuelve cantidades 2 y 1; rehacer devuelve 2. Historial bloqueado rechaza deshacer.',
+ 'P30':'Un aviso, una auditoria de PedidoPagado y una metrica; segundo procesamiento no publica de nuevo.',
+ 'P31':'Ciclo permitido completo; despacho prematuro, cancelacion y repeticion rechazados.',
+ 'P32':'Politica nueva aplica 20% sin editar la calculadora; pruebas numericas adicionales verifican VIP, MAYORISTA y NORMAL.',
  'P33':'Arrepentimiento dia 10 rechazado; defecto dia 20 tambien verificado en P35.',
+ 'P34':'Visitor obtiene tres SKU y peso total 1.00 kg del kit teletrabajo.',
+ 'P35':'Ana recibe 54.00, sin envio; stock P01 vuelve a 8 y la solicitud repetida se rechaza; una devolucion.',
+ 'P36':'Con P01=1 y dos confirmaciones concurrentes: una aceptada, un pago y stock final cero.',
+ 'P37':'Fallo deja evento pendiente con un intento; procesador nuevo lo recupera; un aviso y un pago.',
  'P38':'Referencias inspeccionadas, contratos de proveedores sustituidos y compilacion de los cinco proyectos. El total automatico figura en el TRX.'
 }
 matriz = []
+archivos_tests = [f for f in (ROOT/'tests/LogiMarket.Tests').rglob('*.cs') if 'obj' not in f.parts and 'bin' not in f.parts]
 for c in casos:
     pruebas = [r for r in resultados if mapa[c['Id']] in r.attrib.get('testName', '')]
     aprobado = bool(pruebas) and all(r.attrib['outcome'] == 'Passed' for r in pruebas)
     registro = dict(c, Estado='APROBADO' if aprobado else 'PENDIENTE O FALLIDO', Fecha=fecha,
-       Obtenido=(f"{len(pruebas)} prueba(s) automatizada(s) aprobada(s). " if aprobado else 'Revisar el resultado del TRX. ') + notas.get(c['Id'], 'Las aserciones verifican el esperado y los efectos colaterales del escenario.'),
+       Obtenido=(f"{len(pruebas)} prueba(s) automatizada(s) aprobada(s). " + notas.get(c['Id'], '') if aprobado else 'Revisar el resultado del TRX.'),
+       Archivos=sorted({f.relative_to(ROOT).as_posix() for f in archivos_tests if any('.'+f.stem+'.' in r.attrib['testName'] for r in pruebas)}),
        Metodos=[r.attrib['testName'] for r in pruebas], Evidencia='docs/evidencias/aceptacion.trx')
     matriz.append(registro)
 (ROOT / 'docs/pruebas/MATRIZ_RESULTADOS.json').write_text(json.dumps(matriz, ensure_ascii=False, indent=2), encoding='utf-8')
@@ -52,7 +84,7 @@ md = ['# Matriz oficial P01-P38', '', f"Fecha de ejecucion: {fecha}. Pruebas aut
       'Los escenarios y esperados se extrajeron de la guia. Los metodos y estados proceden del TRX; las notas visuales corresponden a capturas reales.', '']
 for r in matriz:
     md += [f"## {r['Id']} - {r['Estado']}", '', f"**Precondicion y entrada:** {r['Entrada']}", '', f"**Esperado:** {r['Esperado']}", '',
-           f"**Obtenido:** {r['Obtenido']}", '', f"**Fecha:** {r['Fecha']}", '', f"**Evidencia:** {r['Evidencia']}", '', '**Archivo/metodo:** ' + '; '.join(r['Metodos']), '']
+           f"**Obtenido:** {r['Obtenido']}", '', f"**Fecha:** {r['Fecha']}", '', f"**Evidencia:** {r['Evidencia']}", '', '**Archivos:** ' + '; '.join(r['Archivos']), '', '**Metodos:** ' + '; '.join(r['Metodos']), '']
 (ROOT / 'docs/pruebas/MATRIZ.md').write_text('\n'.join(md), encoding='utf-8')
 
 font = Path('C:/Windows/Fonts/segoeui.ttf')
@@ -112,13 +144,21 @@ def tabla(filas, anchos):
     t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#DCE7F2')), ('GRID',(0,0),(-1,-1),.4,colors.HexColor('#CCCCCC')), ('VALIGN',(0,0),(-1,-1),'TOP'), ('LEFTPADDING',(0,0),(-1,-1),7),('RIGHTPADDING',(0,0),(-1,-1),7),('TOPPADDING',(0,0),(-1,-1),6),('BOTTOMPADDING',(0,0),(-1,-1),6)]))
     story.append(t); story.append(Spacer(1,10))
 def markdown(ruta):
+    filas = []
+    def emitir():
+        if not filas: return
+        n=len(filas[0]); anchos = [55,285,150] if n==3 else [30,100,130,120,110] if n==5 else [490/n]*n
+        tabla(filas,anchos); filas.clear()
     for linea in (ROOT / ruta).read_text(encoding='utf-8-sig').splitlines():
         if not linea.strip() or linea.startswith('```'): continue
-        if linea.startswith('#'): p(linea.lstrip('# '), 'Heading2')
-        elif linea.startswith('|') and not linea.startswith('|---'):
+        if linea.startswith('|'):
+            if linea.startswith('|---'): continue
             celdas = [c.strip() for c in linea.strip('|').split('|')]
-            p(' | '.join(celdas), 'Pequeno')
+            filas.append(celdas); continue
+        emitir()
+        if linea.startswith('#'): p(linea.lstrip('# '), 'Heading2')
         else: p(linea.replace('`',''), 'Normal')
+    emitir()
 
 p('UNIVERSIDAD TECNICA DE AMBATO', 'Portada'); story.append(Spacer(1,35)); p('LogiMarket 360', 'Title'); p('Informe tecnico APE 04', 'Portada')
 story.append(Spacer(1,35))
@@ -145,7 +185,8 @@ p('Secuencia de confirmacion aceptada', 'Heading2');diagrama('aceptada')
 p('Secuencia de operacion rechazada', 'Heading2');diagrama('rechazada')
 h('6 Clean Code y principios SOLID')
 p('SRP separa calculo, persistencia y presentacion. OCP permite promociones nuevas por IPoliticaDescuento. LSP se prueba con ambos proveedores. ISP conserva contratos pequenos. DIP mantiene EF fuera del nucleo. Los comentarios explican reglas y patrones sin tildes.')
-p('Se documentaron doce riesgos reales en docs/calidad/RIESGOS.md; no se inventan pruebas rojas previas. La primera ejecucion tuvo 31 aprobadas y 16 fallidas por identidades de hijos; la correccion se comprobo con tres ventas y posteriormente con todo el conjunto.')
+markdown('docs/calidad/SOLID.md')
+p('Los riesgos reales se documentan en docs/calidad/RIESGOS.md; no se inventan pruebas rojas previas. La primera ejecucion tuvo 31 aprobadas y 16 fallidas por identidades de hijos. Las dos pruebas posteriores de valoracion fallaron antes de corregir el agregado y ahora forman parte de la ejecucion final.')
 lineas = (ROOT/'docs/patrones/MAPA.md').read_text(encoding='utf-8').splitlines()
 patrones = [[c.strip() for c in l.strip('|').split('|')] for l in lineas if l.startswith('|') and not l.startswith('|---')][1:]
 for titulo, rango in [('7 Cinco patrones creacionales', patrones[:5]), ('8 Siete patrones estructurales', patrones[5:12]), ('9 Once patrones comportamentales', patrones[12:])]:
@@ -160,11 +201,16 @@ for f in capturas:
     story.append(KeepTogether([Paragraph(escape(f.stem.replace('-',' ')),styles['Heading3']),Image(str(f),width=ancho*escala,height=alto*escala),Spacer(1,14)]))
 h('11 Pruebas y resultados')
 p(f"Ejecucion final: {contadores['passed']}/{contadores['total']} aprobadas; fallidas: {contadores.get('failed','0')}; fecha TRX: {fecha}. Cada caso de integracion prepara su propia base SQLite y aplica migraciones y seed. El archivo TRX contiene nombres, duraciones y resultados.")
+tabla([['Familia GoF','Implementados','Verificacion'],['Creacionales','5/5','P11-P15'],['Estructurales','7/7','P16-P22'],['Comportamentales','11/11','P23-P34'],['Total','23/23','Mapa de archivos y pruebas']], [180,100,210])
+limpio = EVID/'compilacion-limpia.txt'
+if limpio.exists() and 'RESULTADO: APROBADO' in limpio.read_text(encoding='utf-8-sig'):
+    p('Compilacion desde una copia extraida sin bin/obj: APROBADA. Log, archivo y SHA256 en docs/evidencias/compilacion-limpia.txt.')
 tabla([['Caso','Subtotal','Descuento','Envio','Total'],['Ana VIP','60.00','6.00','5.00','59.00'],['Luis NORMAL','90.00','0.00','12.00','102.00'],['Carmen MAYORISTA','100.00','15.00','5.00','90.00']], [130,90,90,90,90])
 for r in matriz:
-    p(r['Id'] + ' - ' + r['Estado'], 'Heading2'); p('Precondicion y entrada: ' + r['Entrada']); p('Esperado: ' + r['Esperado']); p('Obtenido: ' + r['Obtenido']); p('Metodo: ' + '; '.join(r['Metodos']), 'Pequeno'); p('Evidencia: ' + r['Evidencia'] + '; fecha: ' + r['Fecha'], 'Pequeno')
+    p(r['Id'] + ' - ' + r['Estado'], 'Heading2'); p('Precondicion y entrada: ' + r['Entrada']); p('Esperado: ' + r['Esperado']); p('Obtenido: ' + r['Obtenido']); p('Archivos: ' + '; '.join(r['Archivos']), 'Pequeno'); p('Metodo: ' + '; '.join(r['Metodos']), 'Pequeno'); p('Evidencia: ' + r['Evidencia'] + '; fecha: ' + r['Fecha'], 'Pequeno')
 h('12 Riesgos y limitaciones')
 p('Los datos personales de portada estan pendientes por decision del usuario. Se usan proveedores simulados y comprobantes internos. Las metricas son de sesion. Las consultas cargan colecciones completas; para un catalogo grande convendria paginar. La revision visual documenta el flujo probado, no una certificacion exhaustiva de todas las combinaciones de DPI y accesibilidad.')
+markdown('docs/calidad/RIESGOS.md')
 h('13 Conclusiones vinculadas con los objetivos')
 p(f"La separacion de cinco proyectos mantiene el dominio independiente de EF y WinForms y se comprueba con referencias y pruebas. Las ventas oficiales producen 59.00, 102.00 y 90.00 desde calculos reales. La devolucion de Ana excluye el envio y reintegra una vez. Las pruebas de concurrencia e idempotencia verifican que una unidad no produzca dos ventas. La evidencia automatizada final alcanza {contadores['passed']} aprobaciones.")
 h('14 Recomendaciones vinculadas con conclusiones')

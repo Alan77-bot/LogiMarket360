@@ -4,8 +4,10 @@ Fuente: GUIA_APE_04.docx proporcionada por el usuario. No modificar los escenari
 
 Estado inicial: únicamente global.json; SDK 8.0.428 y 10.0.401; Git 2.55.0; sin solución ni repositorio previo.
 
-Verificacion del 21 de noviembre de 2026: cinco proyectos .NET 8, 23 patrones integrados y localizados en docs/patrones/MAPA.md, dos migraciones EF8/SQLite, interfaz WinForms ejecutada, 56 pruebas automaticas aprobadas y matriz P01-P38 enlazada a evidencias reales.
+Verificacion del 21 de noviembre de 2026: cinco proyectos .NET 8, 23 patrones integrados y localizados en docs/patrones/MAPA.md, dos migraciones EF8/SQLite, interfaz WinForms ejecutada, 58 pruebas automaticas aprobadas y matriz P01-P38 enlazada a evidencias reales. El codigo del commit 0c3c25f se exporto a una copia sin bin/obj y compilo con cero errores y advertencias.
 
 Se ejecuto visualmente la venta de Ana por USD 59.00, despacho, entrega, devolucion por USD 54.00, cuatro combinaciones de comprobantes y reapertura con persistencia. Se corrigio un fallo visual de redistribucion de columnas y se conservaron logs y capturas. Datos institucionales pendientes por solicitud del usuario.
 
 La revision visual no certifica todas las combinaciones posibles de resolucion, escala y accesibilidad. El registro de riesgos distingue correcciones de diseno frente a pruebas rojas efectivamente ejecutadas.
+
+Se corrigio ademas la valoracion de cantidades editadas: las dos pruebas previas fallidas se conservan y ahora pasan dentro del conjunto completo. Los importes se recalculan desde las instantaneas antes de validar.

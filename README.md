@@ -70,6 +70,12 @@ dotnet ef migrations list --project src/LogiMarket.Infrastructure
 
 Consultar `docs/patrones/MAPA.md`, `docs/DEFENSA.md`, `docs/arquitectura/DISENO.md`, `docs/calidad/RIESGOS.md` y la matriz de pruebas. Los resultados reales estan en los TRX; una prueba automatizada de contenido no equivale a una comprobacion visual de pantalla.
 
+La explicacion de SRP/OCP/LSP/ISP/DIP esta en `docs/calidad/SOLID.md`. Al validar un borrador se recalculan importes desde sus instantaneas; no se cobran totales anteriores a una edicion de cantidades.
+
 ## Entrega
 
 El paquete de codigo debe excluir bin, obj, .vs, bases de ejecucion, secretos y temporales. El informe debe identificar al estudiante y asignatura con los datos reales proporcionados por el autor; no se inventan nombres ni firmas.
+
+Para generar el ZIP desde el ultimo commit: `powershell -File scripts/empaquetar.ps1`. Para comprobarlo desde una carpeta sin archivos generados: `powershell -File scripts/verificar_paquete.ps1 -RutaZip output/APE04_LogiMarket360_DATOS_PENDIENTES.zip`.
+
+El informe se genera con `scripts/generar_informe.py` y Python con ReportLab; esta dependencia solo sirve para regenerar el PDF, no para ejecutar la aplicacion. Los datos institucionales se dejaron pendientes por solicitud del usuario.
