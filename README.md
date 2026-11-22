@@ -27,6 +27,10 @@ Al iniciar se aplican las migraciones y el seed idempotente. La base se guarda e
 
 Las claves anteriores son exclusivamente datos publicos de demostracion. La base almacena PBKDF2-SHA256 con sal aleatoria, 210000 iteraciones y comparacion de tiempo constante.
 
+El menu y las acciones cambian segun el rol. ADMIN administra todo; VENTAS trabaja con clientes, pedidos, cobros y devoluciones; BODEGA opera inventario y despacho; CONSULTA navega en modo de lectura. Catalogo es de lectura para todos excepto ADMIN. Solo ADMIN accede a Auditoria y demo. CONSULTA puede generar comprobantes, sin modificar registros de negocio. Matriz completa en `docs/seguridad/ROLES.md`.
+
+Comprobacion reproducible de menus y botones en Windows: `powershell -File scripts/verificar_roles.ps1`. Usa cuentas ficticias y una base temporal independiente, conserva los resultados bajo tmp y no agrega proyectos a la solucion.
+
 ## Recorrido de venta
 
 1. Acceder como admin o ventas.

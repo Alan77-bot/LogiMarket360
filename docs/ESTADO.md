@@ -13,3 +13,5 @@ La revision visual no certifica todas las combinaciones posibles de resolucion, 
 Se corrigio ademas la valoracion de cantidades editadas: las dos pruebas previas fallidas se conservan y ahora pasan dentro del conjunto completo. Los importes se recalculan desde las instantaneas antes de validar.
 
 22 de noviembre de 2026: v1.1.0 (2d35606) verificada nuevamente: 58/58 pruebas, cero omitidas, y compilacion limpia del ZIP publicado con cero errores y advertencias. Once vistas instanciadas con base temporal y revisadas en ventanas de 1400x850 y 1050x650. El recorrido programatico SelectNextControl no reemplaza una prueba manual de TAB/foco ni una revision de DPI real. PDF final pendiente por indicacion del usuario. Ver VERIFICACION_V1_1_0.md para limites y evidencias.
+
+Mejora posterior de roles: menus y acciones especificos para ADMIN/VENTAS/BODEGA/CONSULTA, con vistas no autorizadas sin instanciar y autorizacion de Application conservada. Comprobacion de formularios reales para los cuatro perfiles y 62/62 pruebas aprobadas. Matriz en docs/seguridad/ROLES.md. PDF final pendiente.

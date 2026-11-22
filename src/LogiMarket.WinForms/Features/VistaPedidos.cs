@@ -17,25 +17,25 @@ public sealed class VistaPedidos : UserControl
     private readonly DataGridView grid = Ui.Grilla();
     private readonly TextBox filtro = new() { Width = 390, PlaceholderText = "ESTADO = PAGADO AND TOTAL >= 50" };
     private readonly string modo;
-    public VistaPedidos(OperacionesUi operaciones, FormularioPrincipalMediator mediator, string modo)
+    public VistaPedidos(OperacionesUi operaciones, FormularioPrincipalMediator mediator, string modo, PermisosVista permisos)
     {
         this.operaciones = operaciones; this.mediator = mediator; this.modo = modo; Dock = DockStyle.Fill;
         var barra = Ui.Barra(); barra.Controls.Add(filtro); barra.Controls.Add(Ui.Boton("Filtrar", Refrescar)); barra.Controls.Add(Ui.Boton("Detalle e historial", Detalle));
-        if (modo == "Pedidos")
+        if (modo == "Pedidos" && permisos.Vender)
         {
             barra.Controls.Add(Ui.Boton("Editar borrador", () => mediator.EditarBorrador(Seleccion())));
             barra.Controls.Add(Ui.Boton("Clonar borrador", async () => await Accion(s => s.GetRequiredService<ServicioPedidos>().Clonar(Seleccion().Id))));
             barra.Controls.Add(Ui.Boton("Validar", async () => await Accion(s => s.GetRequiredService<ServicioPedidos>().Validar(Seleccion().Id))));
             barra.Controls.Add(Ui.Boton("Cancelar pedido", async () => { var id = Seleccion().Id; if (Ui.Confirmar("Cancelar pedido?")) await Accion(s => s.GetRequiredService<InvocadorComandos>().Ejecutar(new CancelarPedidoCommand(s.GetRequiredService<ServicioPedidos>(), id))); }));
         }
-        if (modo == "Cobro") barra.Controls.Add(Ui.Boton("Confirmar cobro simulado", Cobrar));
-        if (modo == "Despacho")
+        if (modo == "Cobro" && permisos.Vender) barra.Controls.Add(Ui.Boton("Confirmar cobro simulado", Cobrar));
+        if (modo == "Despacho" && permisos.OperarBodega)
         {
             barra.Controls.Add(Ui.Boton("Despachar", async () => { var id = Seleccion().Id; if (Ui.Confirmar("Registrar despacho?")) await Accion(s => s.GetRequiredService<InvocadorComandos>().Ejecutar(new DespacharPedidoCommand(s.GetRequiredService<ServicioDespachos>(), id))); }));
             barra.Controls.Add(Ui.Boton("Marcar entregado", async () => { var id = Seleccion().Id; if (Ui.Confirmar("Registrar entrega?")) await Accion(s => s.GetRequiredService<ServicioDespachos>().Entregar(id)); }));
-            barra.Controls.Add(Ui.Boton("Seguimiento", Seguimiento));
         }
-        if (modo == "Devoluciones") barra.Controls.Add(Ui.Boton("Devolucion total", Devolver));
+        if (modo == "Despacho") barra.Controls.Add(Ui.Boton("Seguimiento", Seguimiento));
+        if (modo == "Devoluciones" && permisos.Vender) barra.Controls.Add(Ui.Boton("Devolucion total", Devolver));
         Controls.Add(grid); Controls.Add(barra); mediator.Registrar(Refrescar);
     }
     private Pedido Seleccion() => grid.CurrentRow?.DataBoundItem as Pedido ?? throw new InvalidOperationException("Seleccione pedido.");

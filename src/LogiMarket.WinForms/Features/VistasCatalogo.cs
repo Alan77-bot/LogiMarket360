@@ -14,13 +14,18 @@ public sealed class VistaCatalogo : UserControl
     private readonly FormularioPrincipalMediator mediator;
     private readonly DataGridView grid = Ui.Grilla();
     private readonly TextBox buscar = new() { Width = 220, PlaceholderText = "SKU o nombre" };
-    public VistaCatalogo(OperacionesUi operaciones, FormularioPrincipalMediator mediator)
+    public VistaCatalogo(OperacionesUi operaciones, FormularioPrincipalMediator mediator, PermisosVista permisos)
     {
         this.operaciones = operaciones; this.mediator = mediator; Dock = DockStyle.Fill;
         var barra = Ui.Barra(); barra.Controls.Add(buscar);
-        barra.Controls.Add(Ui.Boton("Buscar", Refrescar)); barra.Controls.Add(Ui.Boton("Nuevo producto", () => EditarProducto(null)));
-        barra.Controls.Add(Ui.Boton("Editar", Editar)); barra.Controls.Add(Ui.Boton("Nuevo kit", () => EditarKit(null)));
-        barra.Controls.Add(Ui.Boton("Eliminar", Eliminar)); Controls.Add(grid); Controls.Add(barra); mediator.Registrar(Refrescar);
+        barra.Controls.Add(Ui.Boton("Buscar", Refrescar));
+        if (permisos.Administrar)
+        {
+            barra.Controls.Add(Ui.Boton("Nuevo producto", () => EditarProducto(null)));
+            barra.Controls.Add(Ui.Boton("Editar", Editar)); barra.Controls.Add(Ui.Boton("Nuevo kit", () => EditarKit(null)));
+            barra.Controls.Add(Ui.Boton("Eliminar", Eliminar));
+        }
+        Controls.Add(grid); Controls.Add(barra); mediator.Registrar(Refrescar);
     }
     public async Task Refrescar() => Ui.Cargar(grid, await operaciones.Consultar(s => s.GetRequiredService<ServicioCatalogo>().Consultar(buscar.Text)));
     private FilaCatalogo Seleccion() => grid.CurrentRow?.DataBoundItem as FilaCatalogo ?? throw new InvalidOperationException("Seleccione una fila.");
@@ -56,11 +61,14 @@ public sealed class VistaClientes : UserControl
     private readonly TextBox buscar = new() { Width = 220, PlaceholderText = "Nombre" };
     private readonly OperacionesUi operaciones;
     private readonly FormularioPrincipalMediator mediator;
-    public VistaClientes(OperacionesUi operaciones, FormularioPrincipalMediator mediator)
+    public VistaClientes(OperacionesUi operaciones, FormularioPrincipalMediator mediator, PermisosVista permisos)
     {
         this.operaciones = operaciones; this.mediator = mediator; Dock = DockStyle.Fill;
         var barra = Ui.Barra(); barra.Controls.Add(buscar); barra.Controls.Add(Ui.Boton("Buscar", Refrescar));
-        barra.Controls.Add(Ui.Boton("Nuevo cliente", () => Editar(null))); barra.Controls.Add(Ui.Boton("Editar cliente", () => Editar(grid.CurrentRow?.DataBoundItem as Cliente ?? throw new InvalidOperationException("Seleccione cliente."))));
+        if (permisos.Vender)
+        {
+            barra.Controls.Add(Ui.Boton("Nuevo cliente", () => Editar(null))); barra.Controls.Add(Ui.Boton("Editar cliente", () => Editar(grid.CurrentRow?.DataBoundItem as Cliente ?? throw new InvalidOperationException("Seleccione cliente."))));
+        }
         Controls.Add(grid); Controls.Add(barra); mediator.Registrar(Refrescar);
     }
     public async Task Refrescar() => Ui.Cargar(grid, await operaciones.Consultar(s => s.GetRequiredService<ServicioClientes>().Consultar(buscar.Text)));
@@ -78,11 +86,13 @@ public sealed class VistaInventario : UserControl
     private readonly DataGridView movimientos = Ui.Grilla();
     private readonly OperacionesUi operaciones;
     private readonly FormularioPrincipalMediator mediator;
-    public VistaInventario(OperacionesUi operaciones, FormularioPrincipalMediator mediator)
+    public VistaInventario(OperacionesUi operaciones, FormularioPrincipalMediator mediator, PermisosVista permisos)
     {
         this.operaciones = operaciones; this.mediator = mediator; Dock = DockStyle.Fill;
         var split = new SplitContainer { Dock = DockStyle.Fill, Orientation = Orientation.Horizontal }; split.Panel1.Controls.Add(stock); split.Panel2.Controls.Add(movimientos);
-        var barra = Ui.Barra(); barra.Controls.Add(Ui.Boton("Registrar entrada / salida", Mover)); barra.Controls.Add(Ui.Boton("Actualizar", Refrescar));
+        var barra = Ui.Barra();
+        if (permisos.OperarBodega) barra.Controls.Add(Ui.Boton("Registrar entrada / salida", Mover));
+        barra.Controls.Add(Ui.Boton("Actualizar", Refrescar));
         Controls.Add(split); Controls.Add(barra); mediator.Registrar(Refrescar);
     }
     public async Task Refrescar()
