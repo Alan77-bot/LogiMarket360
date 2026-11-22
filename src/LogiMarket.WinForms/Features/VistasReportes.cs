@@ -52,21 +52,6 @@ public sealed class VistaReportes : UserControl
         await documento.Exportar(); if (txt) MessageBox.Show("Archivo TXT generado en la carpeta de comprobantes indicada en README.");
     }
 }
-public sealed class VistaPanel : UserControl
-{
-    private readonly Label resumen = new() { Dock = DockStyle.Top, Height = 260, Padding = new Padding(24), Font = new Font("Segoe UI", 17) };
-    private readonly OperacionesUi operaciones;
-    private readonly MetricasSesion metricas;
-    public VistaPanel(OperacionesUi operaciones, FormularioPrincipalMediator mediator, MetricasSesion metricas)
-    { this.operaciones = operaciones; this.metricas = metricas; Dock = DockStyle.Fill; Controls.Add(resumen); mediator.Registrar(Refrescar); }
-    public async Task Refrescar()
-    {
-        var datos = await operaciones.Consultar(async s => (Pedidos: await s.GetRequiredService<ServicioPedidos>().Consultar(), Productos: await s.GetRequiredService<IRepositorio>().Productos()));
-        resumen.Text = $"Operacion LogiMarket 360\n\nPedidos: {datos.Pedidos.Count}    Productos: {datos.Productos.Count}\n" +
-            $"Alertas de stock (<= 3): {datos.Productos.Count(p => p.Stock <= 3)}\n" +
-            $"Eventos de esta sesion: pagos {metricas.Pagos}, despachos {metricas.Despachos}, devoluciones {metricas.Devoluciones}";
-    }
-}
 public sealed class VistaAuditoria : UserControl
 {
     private readonly OperacionesUi operaciones;
